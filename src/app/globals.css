@@ -2,29 +2,125 @@
 @tailwind components;
 @tailwind utilities;
 
-:root{
-  --foreground : #E4ECFF
+:root {
+  --foreground: #e4ecff;
+  --sub-foreground : #CBACF9;
+  --fade-foregroud : #BEC1DD;
 }
 
-@layer base{
-  *{
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes border-spin {
+  from {
+    --angle: 0deg;
+  }
+  to {
+    --angle: 360deg;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+  * {
     color: var(--foreground);
   }
+  body{
+    overflow-x: hidden;
+  }
 }
 
-@layer utilities {
+@layer components{
+  .section-padding {
+    @apply pt-16 lg:px-24 px-4 lg:pt-10;
+  }
+}
 
-  .section-padding{
-    @apply lg:px-24 px-4
+
+@layer utilities {
+  .border-gradient {
+    transition: all 0.4;
+  }
+  .border-gradient::after {
+    --angle: 0deg;
+    content: "";
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 1px;
+    background-image: conic-gradient(
+      from var(--angle),
+      red,
+      blue 20%,
+      orange 40%,
+      purple 60%,
+      green 80%,
+      red 100%
+    );
+    border-radius: inherit;
+    z-index: -1;
+    box-sizing: content-box;
+    animation: border-spin 2s infinite linear;
+  }
+  .border-gradient::before {
+    --angle: 0deg;
+    content: "";
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 1px;
+    background-image: conic-gradient(
+      from var(--angle),
+      red,
+      blue 20%,
+      orange 40%,
+      purple 60%,
+      green 80%,
+      red 100%
+    );
+    border-radius: inherit;
+    z-index: -1;
+    box-sizing: content-box;
+    filter: blur(2rem);
+    opacity: 0;
+    animation: border-spin 2s infinite linear;
+    transition: all 0.5s;
+    @apply max-lg:opacity-100
+  }
+  .border-gradient:hover::before {
+    opacity: 1;
   }
 
-  .bg-caro{
+  .section-title {
+    @apply lg:text-5xl font-bold lg:mb-12 text-center;
+  }
+
+  .bg-caro {
     background-size: 100px 100px;
-    background-image: 
-      linear-gradient(to right , rgba(255,255,255,0.05) 1px , transparent 1px),
-      linear-gradient(to bottom , rgba(255,255,255,0.05) 1px , transparent 1px);
+    background-image: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.05) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
     background-repeat: repeat;
-    mask-image: linear-gradient(to bottom, rgb(255, 255, 255 , 1) 90%,rgba(255, 255, 255, 0) );
-  }  
-  
+    mask-image: linear-gradient(
+      to bottom,
+      rgb(255, 255, 255, 0.4) 10%,
+      rgb(255, 255, 255, 1) 90%,
+      rgba(255, 255, 255, 0.4)
+    );
+  }
 }
