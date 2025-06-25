@@ -28,7 +28,7 @@ const Projects = () => {
                 }}
               >
                 <div className="w-full h-full relative lg:rounded-lg overflow-hidden">
-                  <Image src={`${img}`} fill alt="1" className="object-cover" />
+                  <Image src={`${img}`} fill alt="1" className="object-contain" />
                 </div>
               </AspectRatio>
               <div className="lg:my-9 flex flex-col grow mt-5">
